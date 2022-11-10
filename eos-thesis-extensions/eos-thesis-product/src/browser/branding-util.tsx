@@ -99,7 +99,7 @@ export function renderTickets(windowService: WindowService): React.ReactNode {
             Eclipse Theia Blueprint only packages existing functionality into a product and installers
             for the product. If you believe there is a mistake in packaging, something needs to be added to the
             packaging or the installers do not work properly,
-            please <ExternalBrowserLink text="open an issue on Github" url="https://github.com/eclipse-theia/theia-blueprint/issues/new/choose"
+            please <ExternalBrowserLink text="open an issue on Github" url="https://github.com/giflw/eos-thesis-ide/issues/new/choose"
                 windowService={windowService} ></ExternalBrowserLink> to let us know.
         </div>
     </div>;
@@ -112,7 +112,7 @@ export function renderSourceCode(windowService: WindowService): React.ReactNode 
         </h3>
         <div >
             The source code of Eclipse Theia Blueprint is available
-            on <ExternalBrowserLink text="Github" url="https://github.com/eclipse-theia/theia-blueprint"
+            on <ExternalBrowserLink text="Github" url="https://github.com/giflw/eos-thesis-ide"
                 windowService={windowService} ></ExternalBrowserLink>.
         </div>
     </div>;
