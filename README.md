@@ -1,7 +1,7 @@
 <br/>
-<div id="theia-logo" align="center">
+<div id="eos-thesis-logo" align="center">
     <br />
-    <img src="https://raw.githubusercontent.com/eclipse-theia/theia-blueprint/master/theia-extensions/theia-blueprint-product/src/browser/icons/TheiaBlueprintLogo-blue.png" alt="Theia Logo" width="300"/>
+    <img src="https://raw.githubusercontent.com/giflw/eos-thesis-ide/main/eos-thesis-extensions/eos-thesis-product/src/browser/icons/TheiaBlueprintLogo-blue.png" alt="Theia Logo" width="300"/>
     <h3>Eclipse Theia Blueprint</h3>
 </div>
 
@@ -51,9 +51,9 @@ Documentation on how to package Theia as a Desktop Product may be found [here](h
 - Root level configures mono-repo build with lerna
 - `applications` groups the different app targets
   - `electron` contains app to package, packaging configuration, and E2E tests for the electron target.
-- `theia-extensions` groups the various custom theia extensions for Blueprint
-  - `theia-blueprint-product` contains a Theia extension contributing the product branding (about dialogue and welcome page).
-  - `theia-blueprint-updater` contains a Theia extension contributing the update mechanism and corresponding UI elements (based on the electron updater).
+- `eos-thesis-extensions` groups the various custom theia extensions for Blueprint
+  - `eos-thesis-product` contains a Theia extension contributing the product branding (about dialogue and welcome page).
+  - `eos-thesis-updater` contains a Theia extension contributing the update mechanism and corresponding UI elements (based on the electron updater).
 
 ### Build
 
