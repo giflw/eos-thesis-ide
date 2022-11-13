@@ -21,10 +21,10 @@ import { GettingStartedWidget } from '@theia/getting-started/lib/browser/getting
 import { VSXEnvironment } from '@theia/vsx-registry/lib/common/vsx-environment';
 import { WindowService } from '@theia/core/lib/browser/window/window-service';
 import { Message, PreferenceService } from '@theia/core/lib/browser';
-import { BlueprintPreferences } from './theia-blueprint-preferences';
+import { EosThesisPreferences } from './eos-thesis-preferences';
 
 @injectable()
-export class TheiaBlueprintGettingStartedWidget extends GettingStartedWidget {
+export class EosThesisGettingStartedWidget extends GettingStartedWidget {
 
     @inject(VSXEnvironment)
     protected readonly environment: VSXEnvironment;
@@ -132,7 +132,7 @@ export class TheiaBlueprintGettingStartedWidget extends GettingStartedWidget {
 
     protected renderHeader(): React.ReactNode {
         return <div className='gs-header'>
-            <h1>Eclipse Theia <span className='gs-blue-header'>Blueprint</span></h1>
+            <h1><span className='gs-blue-header'>Eos Thesis IDE</span></h1>
             {this.renderVersion()}
         </div>;
     }
@@ -159,10 +159,10 @@ export interface PreferencesProps {
 }
 
 function GSPreferences(props: PreferencesProps): JSX.Element {
-    const [alwaysShowWelcomePage, setAlwaysShowWelcomePage] = React.useState<boolean>(props.preferenceService.get(BlueprintPreferences.alwaysShowWelcomePage, true));
+    const [alwaysShowWelcomePage, setAlwaysShowWelcomePage] = React.useState<boolean>(props.preferenceService.get(EosThesisPreferences.alwaysShowWelcomePage, true));
     React.useEffect(() => {
         const preflistener = props.preferenceService.onPreferenceChanged(change => {
-            if (change.preferenceName === BlueprintPreferences.alwaysShowWelcomePage) {
+            if (change.preferenceName === EosThesisPreferences.alwaysShowWelcomePage) {
                 const prefValue: boolean = change.newValue;
                 console.info('Set blueprint.alwaysShowWelcomePage checkbox state to ' + prefValue);
                 setAlwaysShowWelcomePage(prefValue);
@@ -173,7 +173,7 @@ function GSPreferences(props: PreferencesProps): JSX.Element {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newChecked = e.target.checked;
         console.info('Set blueprint.alwaysShowWelcomePage pref to ' + newChecked);
-        props.preferenceService.updateValue(BlueprintPreferences.alwaysShowWelcomePage, newChecked);
+        props.preferenceService.updateValue(EosThesisPreferences.alwaysShowWelcomePage, newChecked);
     };
     return <div className='gs-preference'>
         <input type="checkbox" className="theia-input" id="alwaysShowWelcomePage" onChange={handleChange} checked={alwaysShowWelcomePage}></input>

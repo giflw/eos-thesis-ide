@@ -22,30 +22,30 @@ import { CommandContribution } from '@theia/core/lib/common/command';
 import { ContainerModule } from '@theia/core/shared/inversify';
 import { GettingStartedWidget } from '@theia/getting-started/lib/browser/getting-started-widget';
 import { MenuContribution } from '@theia/core/lib/common/menu';
-import { TheiaBlueprintAboutDialog } from './theia-blueprint-about-dialog';
-import { TheiaBlueprintContribution } from './theia-blueprint-contribution';
-import { TheiaBlueprintGettingStartedContribution } from './theia-blueprint-getting-started-contribution';
-import { TheiaBlueprintGettingStartedWidget } from './theia-blueprint-getting-started-widget';
-import { theiaBlueprintPreferenceSchema } from './theia-blueprint-preferences';
+import { EosThesisAboutDialog } from './eos-thesis-about-dialog';
+import { EosThesisContribution } from './eos-thesis-contribution';
+import { EosThesisGettingStartedContribution } from './eos-thesis-getting-started-contribution';
+import { EosThesisGettingStartedWidget } from './eos-thesis-getting-started-widget';
+import { eosThesisPreferenceSchema } from './eos-thesis-preferences';
 
 export default new ContainerModule((bind, _unbind, isBound, rebind) => {
-    bindViewContribution(bind, TheiaBlueprintGettingStartedContribution);
-    bind(FrontendApplicationContribution).toService(TheiaBlueprintGettingStartedContribution);
-    bind(TheiaBlueprintGettingStartedWidget).toSelf();
+    bindViewContribution(bind, EosThesisGettingStartedContribution);
+    bind(FrontendApplicationContribution).toService(EosThesisGettingStartedContribution);
+    bind(EosThesisGettingStartedWidget).toSelf();
     bind(WidgetFactory).toDynamicValue(context => ({
         id: GettingStartedWidget.ID,
-        createWidget: () => context.container.get<TheiaBlueprintGettingStartedWidget>(TheiaBlueprintGettingStartedWidget),
+        createWidget: () => context.container.get<EosThesisGettingStartedWidget>(EosThesisGettingStartedWidget),
     })).inSingletonScope();
     if (isBound(AboutDialog)) {
-        rebind(AboutDialog).to(TheiaBlueprintAboutDialog).inSingletonScope();
+        rebind(AboutDialog).to(EosThesisAboutDialog).inSingletonScope();
     } else {
-        bind(AboutDialog).to(TheiaBlueprintAboutDialog).inSingletonScope();
+        bind(AboutDialog).to(EosThesisAboutDialog).inSingletonScope();
     }
 
-    bind(TheiaBlueprintContribution).toSelf().inSingletonScope();
+    bind(EosThesisContribution).toSelf().inSingletonScope();
     [CommandContribution, MenuContribution].forEach(serviceIdentifier =>
-        bind(serviceIdentifier).toService(TheiaBlueprintContribution)
+        bind(serviceIdentifier).toService(EosThesisContribution)
     );
 
-    bind(PreferenceContribution).toConstantValue({ schema: theiaBlueprintPreferenceSchema });
+    bind(PreferenceContribution).toConstantValue({ schema: eosThesisPreferenceSchema });
 });

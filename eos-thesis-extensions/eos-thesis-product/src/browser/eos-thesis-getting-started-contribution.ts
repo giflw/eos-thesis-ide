@@ -18,11 +18,11 @@ import { AbstractViewContribution, FrontendApplication, FrontendApplicationContr
 import { inject, injectable } from '@theia/core/shared/inversify';
 import { FrontendApplicationStateService } from '@theia/core/lib/browser/frontend-application-state';
 import { GettingStartedWidget } from '@theia/getting-started/lib/browser/getting-started-widget';
-import { TheiaBlueprintGettingStartedWidget } from './theia-blueprint-getting-started-widget';
-import { BlueprintPreferences } from './theia-blueprint-preferences';
+import { EosThesisGettingStartedWidget } from './eos-thesis-getting-started-widget';
+import { EosThesisPreferences } from './eos-thesis-preferences';
 
 @injectable()
-export class TheiaBlueprintGettingStartedContribution extends AbstractViewContribution<TheiaBlueprintGettingStartedWidget> implements FrontendApplicationContribution {
+export class EosThesisGettingStartedContribution extends AbstractViewContribution<EosThesisGettingStartedWidget> implements FrontendApplicationContribution {
 
     @inject(FrontendApplicationStateService)
     protected readonly stateService: FrontendApplicationStateService;
@@ -43,7 +43,7 @@ export class TheiaBlueprintGettingStartedContribution extends AbstractViewContri
     async onStart(app: FrontendApplication): Promise<void> {
         this.stateService.reachedState('ready').then(
             () => this.preferenceService.ready.then(() => {
-                const showWelcomePage: boolean = this.preferenceService.get(BlueprintPreferences.alwaysShowWelcomePage, true);
+                const showWelcomePage: boolean = this.preferenceService.get(EosThesisPreferences.alwaysShowWelcomePage, true);
                 if (showWelcomePage) {
                     this.openView({ reveal: true, activate: true });
                 }

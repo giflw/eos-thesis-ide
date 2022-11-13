@@ -22,7 +22,7 @@ import { VSXEnvironment } from '@theia/vsx-registry/lib/common/vsx-environment';
 import { WindowService } from '@theia/core/lib/browser/window/window-service';
 
 @injectable()
-export class TheiaBlueprintAboutDialog extends AboutDialog {
+export class EosThesisAboutDialog extends AboutDialog {
 
     @inject(VSXEnvironment)
     protected readonly environment: VSXEnvironment;
@@ -100,7 +100,7 @@ export class TheiaBlueprintAboutDialog extends AboutDialog {
 
     protected renderTitle(): React.ReactNode {
         return <div className='gs-header'>
-            <h1>Eclipse Theia <span className='gs-blue-header'>Blueprint</span></h1>
+            <h1><span className='gs-blue-header'>Eos Thesis IDE</span></h1>
             {this.renderVersion()}
         </div>;
     }
@@ -108,7 +108,7 @@ export class TheiaBlueprintAboutDialog extends AboutDialog {
     protected renderVersion(): React.ReactNode {
         return <div>
             <p className='gs-sub-header' >
-                {this.applicationInfo ? 'Version ' + this.applicationInfo.version + ' (Beta)' : '(Beta)'}
+                {this.applicationInfo ? 'Theia Version ' + this.applicationInfo.version + ' (Beta)' : '(Beta)'}
             </p>
 
             <p className='gs-sub-header' >

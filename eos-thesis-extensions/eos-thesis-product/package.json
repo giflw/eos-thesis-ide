@@ -17,15 +17,15 @@
   },
   "theiaExtensions": [
     {
-      "frontendElectron": "lib/browser/theia-blueprint-frontend-module",
-      "electronMain": "lib/electron-main/theia-blueprint-main-module",
-      "backend": "lib/node/theia-blueprint-backend-module"
+      "frontendElectron": "lib/browser/eos-thesis-frontend-module",
+      "electronMain": "lib/electron-main/eos-thesis-main-module",
+      "backend": "lib/node/eos-thesis-backend-module"
     }
   ],
   "keywords": [
     "theia-extension"
   ],
-  "license": "EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0",
+  "license": "EPL-2.0 - NO IA",
   "repository": {
     "type": "git",
     "url": "https://github.com/giflw/eos-thesis-ide.git"

@@ -15,14 +15,14 @@
  ********************************************************************************/
 
 import { PreferenceSchema } from '@theia/core/lib/common/preferences/preference-schema';
-export namespace BlueprintPreferences {
-    export const alwaysShowWelcomePage = 'blueprint.alwaysShowWelcomePage';
+export namespace EosThesisPreferences {
+    export const alwaysShowWelcomePage = 'eosThesis.alwaysShowWelcomePage';
 }
 
-export const theiaBlueprintPreferenceSchema: PreferenceSchema = {
+export const eosThesisPreferenceSchema: PreferenceSchema = {
     'type': 'object',
     'properties': {
-        'blueprint.alwaysShowWelcomePage': {
+        'eosThesis.alwaysShowWelcomePage': {
             type: 'boolean',
             description: 'Show Welcome Page after every start of the application.',
             default: true
