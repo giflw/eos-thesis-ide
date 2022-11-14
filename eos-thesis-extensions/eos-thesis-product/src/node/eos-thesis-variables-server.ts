@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import * as os from 'os';
+//import * as os from 'os';
 import * as path from 'path';
 import { injectable } from '@theia/core/shared/inversify';
 import { FileUri } from '@theia/core/lib/node/file-uri';
@@ -23,7 +23,9 @@ import { EnvVariablesServerImpl } from '@theia/core/lib/node/env-variables';
 @injectable()
 export class EosThesisEnvVariableServer extends EnvVariablesServerImpl {
 
-    protected readonly _configDirUri: string = FileUri.create(path.join(os.homedir(), '.eos-thesis')).toString(true);
+    //protected readonly _configDirUri: string = FileUri.create(path.join(os.homedir(), '.eos-thesis')).toString(true);
+    protected readonly _configDirUri: string = FileUri.create(path.resolve(process.execPath, '../data/backend')).toString(true);
+
 
     async getConfigDirUri(): Promise<string> {
         return this._configDirUri;
