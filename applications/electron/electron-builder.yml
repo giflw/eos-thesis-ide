@@ -1,6 +1,6 @@
-appId: eclipse.theia
-productName: TheiaBlueprint
-copyright: Copyright © 2020-2022 Eclipse Foundation, Inc
+appId: giflw.eos-thesis-ide
+productName: EosThesisIDE
+copyright: Copyright © 2020-2022 Guilherme Weizenmann
 electronDist: ../../node_modules/electron/dist
 electronVersion: 15.5.7
 # Although it is generally not recommended to disable asar, it is required for Theia.
@@ -25,12 +25,14 @@ extraResources:
     to: app/plugins
 
 win:
-  icon: resources/icons/WindowsLauncherIcon/TheiaBluePrint.ico
+  icon: resources/icons/WindowsLauncherIcon/EosThesisIDE.ico
   target:
     - nsis
   publish:
-    provider: generic
-    url: "https://download.eclipse.org/theia/latest/windows"
+    provider: github
+    private: false
+    owner: giflw
+    repo: eos-thesis-ide
 mac:
   icon: resources/icons/MacLauncherIcon/512-512-2.icns
   category: public.app-category.developer-tools
@@ -39,26 +41,30 @@ mac:
     - dmg
     - zip
   publish:
-    provider: generic
-    url: "https://download.eclipse.org/theia/latest/macos"
+    provider: github
+    private: false
+    owner: giflw
+    repo: eos-thesis-ide
 linux:
   icon: resources/icons/LinuxLauncherIcon/512-512.png
   category: Development
-  vendor: Eclipse Foundation, Inc
+  vendor: GiFlw
   target:
     - deb
     - AppImage
   publish:
-    provider: generic
-    url: "https://download.eclipse.org/theia/latest/linux"
+    provider: github
+    private: false
+    owner: giflw
+    repo: eos-thesis-ide
 
 nsis:
   menuCategory: true
   oneClick: false
   perMachine: false
-  installerHeaderIcon: resources/icons/WindowsLauncherIcon/TheiaBluePrint.ico
-  installerIcon: resources/icons/WindowsLauncherIcon/TheiaBluePrint.ico
-  uninstallerIcon: resources/icons/WindowsLauncherIcon/TheiaBluePrint.ico
+  installerHeaderIcon: resources/icons/WindowsLauncherIcon/EosThesisIDE.ico
+  installerIcon: resources/icons/WindowsLauncherIcon/EosThesisIDE.ico
+  uninstallerIcon: resources/icons/WindowsLauncherIcon/EosThesisIDE.ico
   installerSidebar: resources/icons/InstallerSidebarImage/164-314Windows.bmp
   uninstallerSidebar: resources/icons/InstallerSidebarImage/164-314Windows.bmp
   allowToChangeInstallationDirectory: true
