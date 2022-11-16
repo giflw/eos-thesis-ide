@@ -26,7 +26,11 @@
     "eslint-plugin-no-null": "^1.0.2",
     "eslint-plugin-no-unsanitized": "^3.1.5",
     "eslint-plugin-react": "^7.23.2",
+    "jake": "^10.8.5",
+    "jszip": "^3.10.1",
     "lerna": "^6.0.1",
+    "pino": "^8.7.0",
+    "pino-pretty": "^9.1.1",
     "rimraf": "^2.7.1",
     "ts-node": "^10.0.0",
     "type-fest": "^0.20.2",
@@ -40,10 +44,14 @@
     "clean": "lerna run yalc:clean && lerna run clean && rimraf node_modules",
     "build": "lerna run build",
     "bundle": "lerna run bundle",
+    "predist": "yarn install",
+    "dist": "yarn eos plugins:download && yarn build && yarn electron package",
+    "postdist": "yarn electron yalc:clean",
     "watch": "lerna run --parallel watch",
     "test": "lerna run test",
     "electron": "yarn --cwd applications/electron",
-    "update:next": "ts-node scripts/update-theia-to-next.ts && lerna run update:next"
+    "update:next": "ts-node scripts/update-theia-to-next.ts && lerna run update:next",
+    "eos": "yarn jake --jakelibdir jakefile.d"
   },
   "workspaces": [
     "applications/*",
