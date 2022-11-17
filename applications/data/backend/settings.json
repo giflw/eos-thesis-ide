@@ -1,7 +1,7 @@
 {
     "window.titleBarStyle": "custom",
     "security.workspace.trust.startupPrompt": "once",
-    "workbench.colorTheme": "GNOME dark",
+    "workbench.colorTheme": "Synthax",
     "workbench.iconTheme": "material-icon-theme",
     "undefined.workbench.iconTheme": "material-icon-theme",
     "updates.reportOnStart": true,
