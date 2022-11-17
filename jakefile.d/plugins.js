@@ -4,7 +4,7 @@ const { attempt, logger, download, get, sleep, unzip, PACKAGE_JSON, PLUGINS_DIR 
 
 const fs = require('fs');
 const fse = require('fs-extra');
-const { desc, namespace, task } = require('jake');
+const { desc, namespace, task, Task } = require('jake');
 const path = require('path');
 const rimraf = require('rimraf');
 
@@ -24,24 +24,21 @@ namespace('plugins', function () {
     desc('Remove undeclared plugins');
     task('prune', () => {
         const plugins = loadPackageJson().theiaPlugins;
-        console.log(plugins);
         fs.readdirSync(PLUGINS_DIR).forEach(async (file) => {
             const parts = file.split('-');
             const version = parts.splice(-1)[0];
             const plugin = parts.join('-');
             const pluginDir = path.resolve(PLUGINS_DIR, `${plugin}-${version}`);
-            const urlVersion = plugins[plugin]?.split('/').splice(-1)[0]
-                .split('@')[0]
-                .replace('.vsix', '').split('-').splice(-1)[0];
+            const urlVersion = versionFromUrl(plugins[plugin]);
             const sameVersion = urlVersion == version;
-            
+
             logger.trace(`${plugin}: ${urlVersion} ${sameVersion ? '==' : '!='} ${version}`);
             if (urlVersion && sameVersion) {
                 logger.info(`${plugin} ${version} (${urlVersion})- expected plugin and version`);
-            } else  {
+            } else {
                 if (urlVersion) {
                     logger.warn(`${plugin} ${version} (${urlVersion}) - unexpected version`);
-                 } else {
+                } else {
                     logger.warn(`${plugin} ${version} (${urlVersion}) - unexpected plugin`);
                 }
                 logger.warn(`Removing ${pluginDir}`);
@@ -74,14 +71,27 @@ namespace('plugins', function () {
         });
     });
 
+    desc('Update plantuml on jebbs.plantuml plugin');
+    task('plantuml', async () => {
+        const filepath = path.resolve(
+            PLUGINS_DIR,
+            fs.readdirSync(PLUGINS_DIR).find(f => f.startsWith('jebbs.plantuml')),
+            'extension',
+            'plantuml.jar'
+        );
+        const releases = await get('https://api.github.com/repos/plantuml/plantuml/releases/latest');
+        const latest = releases.assets.find(r => r.name === 'plantuml.jar');
+        await download(latest.browser_download_url, filepath, { prefix: 'plantuml.jar' });
+    });
+
     desc('Download declared all plugins on package.json theiaPlugins');
     task('download', async (delay = 0) => {
         const plugins = loadPackageJson();
         let wait = false;
         for (let plugin in plugins.theiaPlugins) {
             const url = plugins.theiaPlugins[plugin];
-            const filepath = path.resolve(PLUGINS_DIR, plugin + '-' + url.split('-').slice(-1)[0].split('@')[0]);
-            const dirpath = filepath.substring(0, filepath.lastIndexOf('.'));
+            const dirpath = path.resolve(PLUGINS_DIR, plugin + '-' + versionFromUrl(url));
+            const filepath = dirpath + '.vsix';
             if (fs.existsSync(dirpath)) {
                 logger.info(`${plugin} - already downloaded`)
             } else {
@@ -94,6 +104,15 @@ namespace('plugins', function () {
                 );
                 await unzip(filepath, dirpath, { prefix: plugin });
                 fs.unlinkSync(filepath);
+                if (plugin.includes('plantuml')) {
+                    let t = Task['plugins:plantuml'];
+                    await new Promise((resolve, reject) => {
+                        t.addListener('complete', () => {
+                            resolve();
+                        });
+                        t.invoke();
+                    });
+                }
             }
         }
         logger.info('All plugins downloaded!');
@@ -148,8 +167,12 @@ async function updatePluginsOnFile(filename) {
         }
     }
 
-    console.log('=============');
-    console.log(plugins);
     fs.writeFileSync(filename, JSON.stringify(plugins, null, 2));
-    console.log('=============');
+}
+
+function versionFromUrl(url) {
+    return url?.split('/').splice(-1)[0]
+        .split('@')[0]
+        .split('-').splice(-1)[0]
+        .replace('.vsix', '');
 }

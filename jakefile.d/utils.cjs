@@ -89,19 +89,19 @@ module.exports = {
         const data = fs.readFileSync(file);
         if (data) {
             const zip = new JSZip();
-            await zip.loadAsync(data).then(function (contents) {
-                Object.keys(contents.files).forEach(async (filename) => {
-                    await zip.file(filename).async('nodebuffer').then(function (content) {
-                        const dest = path.resolve(destination, filename);
-                        if (opts.verbose) {
-                            logger.trace(`${opts.prefix} - extracting file ${destination} / ${filename}`);
-                        }
-                        fs.mkdirSync(path.dirname(dest), { recursive: true });
-                        fs.writeFileSync(dest, content);
-                    });
+            const contents = await zip.loadAsync(data);
+            for (const filename in contents.files) {
+                const buffer = zip.file(filename).async('nodebuffer');
+                await buffer.then(function (content) {
+                    const dest = path.resolve(destination, filename);
+                    if (opts.verbose) {
+                        logger.trace(`${opts.prefix} - extracting file ${destination} / ${filename}`);
+                    }
+                    fs.mkdirSync(path.dirname(dest), { recursive: true });
+                    fs.writeFileSync(dest, content);
                 });
-                logger.info(`${opts.prefix} - unzipped ${file}`);
-            });
+            }
+            logger.info(`${opts.prefix} - unzipped ${file}`);
         }
     }
 };
