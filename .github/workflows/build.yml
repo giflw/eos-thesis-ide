@@ -3,13 +3,13 @@ name: Build, package and test
 on:
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
   pull_request:
     branches:
-      - master
-  schedule:
-    - cron: '0 4 * * *' # Runs every day at 4am: https://docs.github.com/en/actions/reference/events-that-trigger-workflows#scheduled-events-schedule
+      - main
+#  schedule:
+#    - cron: '0 4 * * *' # Runs every day at 4am: https://docs.github.com/en/actions/reference/events-that-trigger-workflows#scheduled-events-schedule
 
 jobs:
 
@@ -45,8 +45,7 @@ jobs:
       - name: Build and package
         shell: bash
         run: |
-          yarn --skip-integrity-check --network-timeout 100000
-          yarn electron package
+          yarn --skip-integrity-check --network-timeout 100000 dist
         env:
           NODE_OPTIONS: --max_old_space_size=4096
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # https://github.com/microsoft/vscode-ripgrep/issues/9

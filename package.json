@@ -47,7 +47,7 @@
     "build": "lerna run build",
     "bundle": "lerna run bundle",
     "predist": "yarn install",
-    "dist": "yarn eos dist && yarn eos dist && yarn build && yarn electron package",
+    "dist": "yarn eos dist && yarn build && yarn electron package",
     "postdist": "yarn electron yalc:clean",
     "watch": "lerna run --parallel watch",
     "test": "lerna run test",
