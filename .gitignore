@@ -9,3 +9,8 @@
 **/tsconfig.tsbuildinfo
 *.log
 **/.yalc*
+/applications/data/backend/*
+/applications/data/frontend/*
+!/applications/data/backend/keymaps.json
+!/applications/data/backend/settings.json
+!/applications/data/backend/tasks.json

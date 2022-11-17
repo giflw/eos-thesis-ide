@@ -1,0 +1,16 @@
+{
+    "window.titleBarStyle": "custom",
+    "security.workspace.trust.startupPrompt": "once",
+    "workbench.colorTheme": "GNOME dark",
+    "workbench.iconTheme": "material-icon-theme",
+    "undefined.workbench.iconTheme": "material-icon-theme",
+    "updates.reportOnStart": true,
+    "workbench.tree.renderIndentGuides": "always",
+    "editor.wordWrap": "on",
+    "editor.minimap.enabled": false,
+    "editor.renderWhitespace": "all",
+    "editor.fontFamily": "\"MesloLGM NF\", Consolas, 'Courier New', monospace",
+    "editor.renderWhitespace": "all",
+    "files.eol": "\n",
+    "prettier.endOfLine": "lf"
+}

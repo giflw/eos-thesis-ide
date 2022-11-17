@@ -140,12 +140,14 @@ export class EosThesisGettingStartedWidget extends GettingStartedWidget {
     protected renderVersion(): React.ReactNode {
         return <div>
             <p className='gs-sub-header' >
-                {this.applicationInfo ? 'Version ' + this.applicationInfo.version + ' (Beta)' : '(Beta)'}
+                {this.applicationInfo ? 'Theia Version ' + this.applicationInfo.version + ' (Beta)' : '(Beta)'}
             </p>
 
             <p className='gs-sub-header' >
                 {'VS Code API Version: ' + this.vscodeApiVersion}
             </p>
+
+            <pre>{ JSON.stringify(this) }</pre>
         </div>;
     }
 

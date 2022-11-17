@@ -13,11 +13,12 @@ const BASEDIR = path.resolve(__dirname, '..');
 console.log('!!!! Set LOG_LEVEL environment variable to set pino js log level. Default is trace.');
 const logger = pino(
     {
-        level: process.env.LOG_LEVEL || 'trace',
+        level: process.env.LOG_LEVEL || 'info',
     },
     pretty({
         colorize: true,
-        sync: true
+        sync: true,
+        ignore: 'pid,hostname'
     })
 );
 
@@ -31,8 +32,11 @@ const sleep = (ms) => {
 
 module.exports = {
     BASEDIR,
-    PLUGINS_DIR: path.resolve(BASEDIR, "applications/electron/plugins"),
+    DATA_DIR: path.resolve(BASEDIR, "applications/data"),
+    DIST_DIR: path.resolve(BASEDIR, "applications/electron/dist"),
+    ELECTRON_DIR: path.resolve(BASEDIR, "applications/electron"),
     PACKAGE_JSON: path.resolve(BASEDIR, "applications/electron/package.json"),
+    PLUGINS_DIR: path.resolve(BASEDIR, "applications/electron/plugins"),
     logger,
     sleep,
     get: async (url) => {

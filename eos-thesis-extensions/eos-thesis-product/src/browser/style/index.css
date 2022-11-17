@@ -15,11 +15,33 @@
  ********************************************************************************/
 
 :root {
-    --theia-branding-logo: url(../icons/TheiaBlueprintLogo-blue.png);
+    --theia-branding-logo: url(../icons/EosThesisIDELogo-white.png);
+    --theia-brand-logo-size: 30%;
+    --theia-panel-logo: url(../icons/EosThesisLogoLargeSizeWhite.png);
+    --theia-menu-logo: url(../icons/512-512.png);
+    --theia-statusBar-background: #5500d4;
+    --theia-statusBar-noFolderBackground: #00002b;
+    --theia-statusBar-noFolderForeground: #b7c8c4;
+    --theia-warn-color0: #2b0000;
+    --theia-warn-font-color0: #ff6600;
+    }
+
+.theia-icon {
+    background-image: var(--theia-menu-logo);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#theia-main-content-panel {
+    background-image: var(--theia-panel-logo);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: var(--theia-brand-logo-size);
 }
 
 .gs-blue-header {
-    color: #5088e7;
+    color: #5500D4;
     text-transform: capitalize;
     font-weight: 600;
 }

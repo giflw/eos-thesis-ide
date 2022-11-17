@@ -3,15 +3,52 @@
 const { attempt, logger, download, get, sleep, unzip, PACKAGE_JSON, PLUGINS_DIR } = require('./utils.cjs');
 
 const fs = require('fs');
+const fse = require('fs-extra');
 const { desc, namespace, task } = require('jake');
 const path = require('path');
 const rimraf = require('rimraf');
 
 
-namespace("plugins", function () {
+desc('Run update, download and prune plugins tasks in a single call');
+task('plugins', ['plugins:update', 'plugins:download', 'plugins:prune'], () => {
+    logger.info('Done!');
+});
+
+
+namespace('plugins', function () {
     desc('Update Eos Thesis plugins versions/urls on package.json');
     task('update', async () => {
-        await updatePluginsOnFile(PACKAGE_JSON, { delay: 3000 });
+        await updatePluginsOnFile(PACKAGE_JSON);
+    });
+
+    desc('Remove undeclared plugins');
+    task('prune', () => {
+        const plugins = loadPackageJson().theiaPlugins;
+        console.log(plugins);
+        fs.readdirSync(PLUGINS_DIR).forEach(async (file) => {
+            const parts = file.split('-');
+            const version = parts.splice(-1)[0];
+            const plugin = parts.join('-');
+            const pluginDir = path.resolve(PLUGINS_DIR, `${plugin}-${version}`);
+            const urlVersion = plugins[plugin]?.split('/').splice(-1)[0]
+                .split('@')[0]
+                .replace('.vsix', '').split('-').splice(-1)[0];
+            const sameVersion = urlVersion == version;
+            
+            logger.trace(`${plugin}: ${urlVersion} ${sameVersion ? '==' : '!='} ${version}`);
+            if (urlVersion && sameVersion) {
+                logger.info(`${plugin} ${version} (${urlVersion})- expected plugin and version`);
+            } else  {
+                if (urlVersion) {
+                    logger.warn(`${plugin} ${version} (${urlVersion}) - unexpected version`);
+                 } else {
+                    logger.warn(`${plugin} ${version} (${urlVersion}) - unexpected plugin`);
+                }
+                logger.warn(`Removing ${pluginDir}`);
+                await fse.remove(pluginDir);
+            }
+        });
+        logger.info('Plugins directory pruned!');
     });
 
     desc('Remove all downloaded plugins');
@@ -29,7 +66,7 @@ namespace("plugins", function () {
                         logger.error(err);
                         reject();
                     } else {
-                        logger.info("Cleaned!");
+                        logger.info('Cleaned!');
                         resolve();
                     }
                 }
@@ -43,7 +80,7 @@ namespace("plugins", function () {
         let wait = false;
         for (let plugin in plugins.theiaPlugins) {
             const url = plugins.theiaPlugins[plugin];
-            const filepath = path.resolve(PLUGINS_DIR, plugin + '-' + url.split('-').slice(-1)[0]);
+            const filepath = path.resolve(PLUGINS_DIR, plugin + '-' + url.split('-').slice(-1)[0].split('@')[0]);
             const dirpath = filepath.substring(0, filepath.lastIndexOf('.'));
             if (fs.existsSync(dirpath)) {
                 logger.info(`${plugin} - already downloaded`)
@@ -59,7 +96,7 @@ namespace("plugins", function () {
                 fs.unlinkSync(filepath);
             }
         }
-        logger.info("All plugins downloaded!");
+        logger.info('All plugins downloaded!');
     });
 });
 
@@ -73,7 +110,7 @@ function loadPackageJson() {
     return JSON.parse(fs.readFileSync(PACKAGE_JSON));
 }
 
-async function updatePluginsOnFile(filename, config = { delay: 1000 }) {
+async function updatePluginsOnFile(filename) {
     const plugins = JSON.parse(fs.readFileSync(filename));
 
     async function updatePluginVersion(plugin, url) {
@@ -82,9 +119,8 @@ async function updatePluginsOnFile(filename, config = { delay: 1000 }) {
         url = url.split('/file/')[0];
         console.log('======');
         console.log(plugin, '=>', url);
-
-        await sleep(config.delay);
-        let data = await get(url);
+        const attemptOPts = { delay: 250, maxTries: 10, prefix: plugin };
+        let data = await attempt(async () => await get(url), attemptOPts);
 
         let version = '';
         for (version in data.allVersions) {
@@ -93,8 +129,7 @@ async function updatePluginsOnFile(filename, config = { delay: 1000 }) {
             }
         }
         url = data.allVersions[version];
-        await sleep(config.delay);
-        data = await get(url);
+        data = await attempt(async () => await get(url), attemptOPts);
         url = data.files.download;
         console.log(plugin.split('').map(c => ' ').join(''), '=>', url);
 
@@ -107,7 +142,6 @@ async function updatePluginsOnFile(filename, config = { delay: 1000 }) {
             try {
                 url = await updatePluginVersion(plugin, plugins.theiaPlugins[plugin]);
                 plugins.theiaPlugins[plugin] = url;
-                await sleep(config.delay);
             } catch (err) {
                 console.log(err);
             }
