@@ -9,8 +9,8 @@ const path = require('path');
 const rimraf = require('rimraf');
 
 
-desc('Run update, download and prune plugins tasks in a single call');
-task('plugins', ['plugins:update', 'plugins:download', 'plugins:prune'], () => {
+desc('Run download and prune plugins tasks in a single call');
+task('plugins', ['plugins:download', 'plugins:prune'], () => {
     logger.info('Done!');
 });
 
@@ -49,9 +49,9 @@ namespace('plugins', function () {
     });
 
     desc('Remove all downloaded plugins');
-    task('clean', async () => {
+    task('purge', async () => {
         let target = PLUGINS_DIR + "\\*";
-        logger.warn(`Cleaning ${target}`);
+        logger.warn(`Purging ${target}`);
         await sleep(3000);
 
         return new Promise((resolve, reject) => {
@@ -63,7 +63,7 @@ namespace('plugins', function () {
                         logger.error(err);
                         reject();
                     } else {
-                        logger.info('Cleaned!');
+                        logger.info('Purged!');
                         resolve();
                     }
                 }
@@ -85,9 +85,8 @@ namespace('plugins', function () {
     });
 
     desc('Download declared all plugins on package.json theiaPlugins');
-    task('download', async (delay = 0) => {
+    task('download', async () => {
         const plugins = loadPackageJson();
-        let wait = false;
         for (let plugin in plugins.theiaPlugins) {
             const url = plugins.theiaPlugins[plugin];
             const dirpath = path.resolve(PLUGINS_DIR, plugin + '-' + versionFromUrl(url));
@@ -96,8 +95,6 @@ namespace('plugins', function () {
                 logger.info(`${plugin} - already downloaded`)
             } else {
                 // do not delay in first download
-                await sleep(wait ? delay : 0);
-                wait = true;
                 await attempt(
                     async () => await download(url, filepath, { prefix: plugin }),
                     { delay: 100, prefix: plugin }

@@ -19,7 +19,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-2019, ubuntu-18.04, macos-10.15]
+        #os: [windows-2019, ubuntu-18.04, macos-10.15]
+        os: [windows-2019, ubuntu-18.04]
         node: ['14.x']
 
     runs-on: ${{ matrix.os }}
@@ -42,34 +43,53 @@ jobs:
         with:
           python-version: '3.10.8'
 
+      - name: apt-get (Linux)
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          sudo apt-get update --yes
+          sudo apt-get install --yes libsecret-1-dev libxkbfile-dev
+
       - name: Build and package
         shell: bash
         run: |
-          yarn --skip-integrity-check --network-timeout 100000 dist
+          npm install -g yarn
+          yarn --skip-integrity-check --network-timeout 100000
+          yarn electron package
+          yarn eos package
+          mkdir applications/electron/dist/uploads
+          mv applications/electron/dist/EosThesisIDE.* applications/electron/dist/uploads
         env:
+          USE_HARD_LINKS: false
           NODE_OPTIONS: --max_old_space_size=4096
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # https://github.com/microsoft/vscode-ripgrep/issues/9
 
-      - name: Test (Linux)
-        if: matrix.tests != 'skip' && runner.os == 'Linux'
-        uses: GabrielBB/xvfb-action@v1
-        with:
-          run: yarn electron test
+      - name: Upload artifacts to workflow action
+        uses: actions/upload-artifact@v2
+        with: 
+          name: dist
+          path: applications/electron/dist/uploads
 
-      - name: Test (Windows)
-        if: matrix.tests != 'skip' && runner.os == 'Windows'
-        shell: bash
-        run: |
-          yarn electron test
+      #- name: Test (Linux)
+      #  if: matrix.tests != 'skip' && runner.os == 'Linux'
+      #  uses: GabrielBB/xvfb-action@v1
+      #  with:
+      #    run: yarn electron test
 
-      - name: Test (macOS)
-        if: matrix.tests != 'skip' && runner.os == 'macOS'
-        shell: bash
-        run: |
-          yarn electron test
+      #- name: Test (Windows)
+      #  if: matrix.tests != 'skip' && runner.os == 'Windows'
+      #  shell: bash
+      #  run: |
+      #    yarn electron test
 
-      - name: Lint
-        if: matrix.tests != 'skip'
-        shell: bash
-        run: |
-          yarn lint
+      #- name: Test (macOS)
+      #  if: matrix.tests != 'skip' && runner.os == 'macOS'
+      #  shell: bash
+      #  run: |
+      #    yarn electron test
+
+      #- name: Lint
+      #  if: matrix.tests != 'skip'
+      #  shell: bash
+      #  run: |
+      #    yarn lint

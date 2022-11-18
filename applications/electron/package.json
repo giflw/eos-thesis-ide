@@ -83,8 +83,8 @@
     "@theia/variable-resolver": "1.31.1",
     "@theia/vsx-registry": "1.31.1",
     "@theia/workspace": "1.31.1",
-    "eos-thesis-product": "./eos-thesis-extensions/eos-thesis-product",
-    "eos-thesis-updater": "./eos-thesis-extensions/eos-thesis-updater",
+    "eos-thesis-product": "1.31.1",
+    "eos-thesis-updater": "1.31.1",
     "fs-extra": "^9.0.1"
   },
   "devDependencies": {
@@ -111,11 +111,8 @@
     "yargs": "17.2.1"
   },
   "scripts": {
-    "prepare": "yarn clean && yarn build",
-    "yalc:exec": "yarn yalc --store-folder ../../.yalc-store",
-    "yalc:build": "yarn yalc:exec add eos-thesis-product eos-thesis-updater && yarn yalc:exec update",
-    "yalc:clean": "yarn yalc:exec remove eos-thesis-product eos-thesis-updater",
-    "clean": "yarn yalc:clean && theia clean && rimraf node_modules",
+    "prepare": "yarn build && yarn download:plugins",
+    "clean": "theia clean && rimraf node_modules",
     "clean:dist": "rimraf dist",
     "build": "theia rebuild:electron && yarn bundle",
     "bundle": "theia build",

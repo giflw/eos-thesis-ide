@@ -2,6 +2,7 @@
 
 const fetch = require('node-fetch');
 const fs = require('fs');
+const fse = require("fs-extra");
 const JSZip = require('jszip');
 const path = require('path');
 const pino = require('pino');
@@ -52,6 +53,7 @@ module.exports = {
         const response = await fetch(url);
         await new Promise((resolve, reject) => {
             logger.info(`${opts.prefix} - saving to ${filepath}`);
+            fse.ensureDirSync(path.dirname(filepath));
             const fileStream = fs.createWriteStream(filepath);
             response.body.pipe(fileStream);
             response.body.on("error", (err) => {
