@@ -1,16 +1,26 @@
 {
     "window.titleBarStyle": "custom",
     "security.workspace.trust.startupPrompt": "once",
+    "editor.wordWrap": "on",
+    "editor.minimap.enabled": true,
+    "editor.fontFamily": "\"MesloLGM NF\", Consolas, 'Courier New', monospace",
     "workbench.colorTheme": "Synthax",
     "workbench.iconTheme": "material-icon-theme",
-    "undefined.workbench.iconTheme": "material-icon-theme",
-    "updates.reportOnStart": true,
+    "updates.reportOnStart": false,
     "workbench.tree.renderIndentGuides": "always",
-    "editor.wordWrap": "on",
-    "editor.minimap.enabled": false,
-    "editor.renderWhitespace": "all",
-    "editor.fontFamily": "\"MesloLGM NF\", Consolas, 'Courier New', monospace",
     "editor.renderWhitespace": "all",
     "files.eol": "\n",
-    "prettier.endOfLine": "lf"
+    "prettier.endOfLine": "lf",
+    "plantuml.exportOutDir": "",
+    "files.trimTrailingWhitespace": true,
+    "terminal.integrated.fontFamily": "\"MesloLGM NF\", Consolas, 'Courier New', monospace",
+    "sqltools.disableChordKeybindings": true,
+    "sqltools.results.reuseTabs": "connection",
+    "sqltools.sessionFilesFolder": ".sqltools",
+    "files.watcherExclude": {
+        "**/.bloop": true,
+        "**/.metals": true,
+        "**/.ammonite": true
+    }
 }
+
