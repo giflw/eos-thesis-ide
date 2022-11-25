@@ -166,7 +166,7 @@ function GSPreferences(props: PreferencesProps): JSX.Element {
         const preflistener = props.preferenceService.onPreferenceChanged(change => {
             if (change.preferenceName === EosThesisPreferences.alwaysShowWelcomePage) {
                 const prefValue: boolean = change.newValue;
-                console.info('Set blueprint.alwaysShowWelcomePage checkbox state to ' + prefValue);
+                console.info('Set eosThesis.alwaysShowWelcomePage checkbox state to ' + prefValue);
                 setAlwaysShowWelcomePage(prefValue);
             }
         });
@@ -174,7 +174,7 @@ function GSPreferences(props: PreferencesProps): JSX.Element {
     }, [props.preferenceService]);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newChecked = e.target.checked;
-        console.info('Set blueprint.alwaysShowWelcomePage pref to ' + newChecked);
+        console.info('Set eosThesis.alwaysShowWelcomePage pref to ' + newChecked);
         props.preferenceService.updateValue(EosThesisPreferences.alwaysShowWelcomePage, newChecked);
     };
     return <div className='gs-preference'>

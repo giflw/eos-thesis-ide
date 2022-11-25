@@ -33,7 +33,6 @@ mtxr.sqltools-driver-mysql
 mtxr.sqltools-driver-pg
 mtxr.sqltools-driver-sqlite
 muhammad-sammy.csharp
-NicolasVuillamy.vscode-groovy-lint
 njzy.stats-bar
 olifink.fedora-gnome-light-dark
 panekj.powershell
@@ -62,6 +61,7 @@ vscode.debug-auto-launch
 vscode.debug-server-ready
 vscode.emmet
 vscode.git
+vscode.groovy
 vscode.handlebars
 vscode.html
 vscode.html-language-features
