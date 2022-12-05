@@ -60,7 +60,7 @@ jobs:
           yarn eos package
           mkdir applications/electron/dist/uploads
           mv applications/electron/dist/EosThesisIDE.* applications/electron/dist/uploads
-          rm applications/electron/dist/uploads/EosThesisIDE.exe.blockmap
+          if [ -e "applications/electron/dist/uploads/EosThesisIDE.exe.blockmap" ] then; rm applications/electron/dist/uploads/EosThesisIDE.exe.blockmap; fi
         env:
           USE_HARD_LINKS: false
           NODE_OPTIONS: --max_old_space_size=4096
