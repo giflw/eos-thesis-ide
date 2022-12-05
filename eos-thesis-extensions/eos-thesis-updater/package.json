@@ -1,12 +1,12 @@
 {
   "private": true,
   "name": "eos-thesis-updater",
-  "version": "1.31.1",
+  "version": "1.32.0",
   "description": "Eos Thesis IDE Updater",
   "dependencies": {
-    "@theia/core": "1.31.1",
-    "@theia/output": "1.31.1",
-    "@theia/preferences": "1.31.1",
+    "@theia/core": "1.32.0",
+    "@theia/output": "1.32.0",
+    "@theia/preferences": "1.32.0",
     "electron-log": "^4.3.0",
     "electron-updater": "4.3.9",
     "fs-extra": "^10.0.0",
@@ -29,12 +29,12 @@
   "license": "EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/giflw/eos-thesis-ide.git"
+    "url": "https://github.com/eclipse-theia/theia-blueprint.git"
   },
   "bugs": {
-    "url": "https://github.com/giflw/eos-thesis-ide/issues"
+    "url": "https://github.com/eclipse-theia/theia-blueprint/issues"
   },
-  "homepage": "https://github.com/giflw/eos-thesis-ide",
+  "homepage": "https://github.com/eclipse-theia/theia-blueprint",
   "files": [
     "lib",
     "src"
