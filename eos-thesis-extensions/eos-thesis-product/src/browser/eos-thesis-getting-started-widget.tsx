@@ -146,8 +146,6 @@ export class EosThesisGettingStartedWidget extends GettingStartedWidget {
             <p className='gs-sub-header' >
                 {'VS Code API Version: ' + this.vscodeApiVersion}
             </p>
-
-            <pre>{ JSON.stringify(this) }</pre>
         </div>;
     }
 
