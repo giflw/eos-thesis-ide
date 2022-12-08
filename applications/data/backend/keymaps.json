@@ -8,7 +8,11 @@
         "keybinding": "ctrl+q"
     },
     {
-        "command": "core.close.tab",
+        "command": "core.close.main.tab",
         "keybinding": "ctrl+w"
+    },
+    {
+        "command": "-core.close.main.tab",
+        "keybinding": "ctrl+f4"
     }
 ]
