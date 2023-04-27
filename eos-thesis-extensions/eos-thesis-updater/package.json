@@ -1,14 +1,14 @@
 {
   "private": true,
   "name": "eos-thesis-updater",
-  "version": "1.32.0",
+  "version": "1.36.0",
   "description": "Eos Thesis IDE Updater",
   "dependencies": {
-    "@theia/core": "1.32.0",
-    "@theia/output": "1.32.0",
-    "@theia/preferences": "1.32.0",
+    "@theia/core": "1.36.0",
+    "@theia/output": "1.36.0",
+    "@theia/preferences": "1.36.0",
     "electron-log": "^4.3.0",
-    "electron-updater": "4.3.9",
+    "electron-updater": "5.3.0",
     "fs-extra": "^10.0.0",
     "vscode-uri": "^2.1.1"
   },

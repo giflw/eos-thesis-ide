@@ -1,13 +1,13 @@
 {
   "private": true,
   "name": "eos-thesis-product",
-  "version": "1.32.0",
+  "version": "1.36.0",
   "description": "Eos Thesis IDE Product Branding",
   "dependencies": {
-    "@theia/core": "1.32.0",
-    "@theia/getting-started": "1.32.0",
-    "@theia/vsx-registry": "1.32.0",
-    "@theia/workspace": "1.32.0",
+    "@theia/core": "1.36.0",
+    "@theia/getting-started": "1.36.0",
+    "@theia/vsx-registry": "1.36.0",
+    "@theia/workspace": "1.36.0",
     "inversify": "^5.1.1"
   },
   "devDependencies": {
@@ -25,15 +25,15 @@
   "keywords": [
     "theia-extension"
   ],
-  "license": "EPL-2.0 - NO IA",
+  "license": "EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/giflw/eos-thesis-ide.git"
+    "url": "https://github.com/eclipse-theia/theia-blueprint.git"
   },
   "bugs": {
-    "url": "https://github.com/giflw/eos-thesis-ide/issues"
+    "url": "https://github.com/eclipse-theia/theia-blueprint/issues"
   },
-  "homepage": "https://github.com/giflw/eos-thesis-ide",
+  "homepage": "https://github.com/eclipse-theia/theia-blueprint",
   "files": [
     "lib",
     "src"
