@@ -20,8 +20,8 @@ jobs:
       fail-fast: false
       matrix:
         #os: [windows-2019, ubuntu-18.04, macos-10.15]
-        os: [windows-2019, ubuntu-18.04]
-        node: ['16.x']
+        os: [windows-2019, ubuntu-20.04, ubuntu-22.04]
+        node: ['18.x']
 
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
