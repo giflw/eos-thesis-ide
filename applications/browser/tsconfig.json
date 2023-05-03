@@ -6,7 +6,7 @@
     },
     "references": [
       {
-        "path": "../../theia-extensions/theia-blueprint-product"
+        "path": "../../eos-thesis-extensions/eos-thesis-product"
       }
     ]
 }

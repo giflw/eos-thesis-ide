@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "theia-blueprint-browser",
+  "name": "eos-thesis-browser",
   "description": "Eclipse Theia blueprint browser product",
   "productName": "Theia Blueprint",
   "version": "1.36.0",
@@ -83,7 +83,7 @@
     "@theia/vsx-registry": "1.36.0",
     "@theia/workspace": "1.36.0",
     "fs-extra": "^9.0.1",
-    "theia-blueprint-product": "1.36.0"
+    "eos-thesis-product": "1.36.0"
   },
   "devDependencies": {
     "@theia/cli": "1.36.0"

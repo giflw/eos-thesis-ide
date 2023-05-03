@@ -30,9 +30,9 @@ interface PathEntry {
 }
 
 @injectable()
-export class TheiaLauncherServiceEndpoint implements BackendApplicationContribution {
+export class EosThesisLauncherServiceEndpoint implements BackendApplicationContribution {
     protected static PATH = '/launcher';
-    private LAUNCHER_LINK_SOURCE = '/usr/local/bin/theia';
+    private LAUNCHER_LINK_SOURCE = '/usr/local/bin/eos-thesis';
 
     @inject(ILogger)
     protected readonly logger: ILogger;
@@ -45,7 +45,7 @@ export class TheiaLauncherServiceEndpoint implements BackendApplicationContribut
         router.put('/', (request, response) => this.createLauncher(request, response));
         router.get('/initialized', (request, response) => this.isInitialized(request, response));
         app.use(json());
-        app.use(TheiaLauncherServiceEndpoint.PATH, router);
+        app.use(EosThesisLauncherServiceEndpoint.PATH, router);
     }
 
     private async isInitialized(_request: Request, response: Response): Promise<void> {

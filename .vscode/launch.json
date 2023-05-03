@@ -44,7 +44,7 @@
         "${workspaceFolder}/applications/electron/src-gen/frontend/electron-main.js",
         "${workspaceFolder}/applications/electron/src-gen/backend/main.js",
         "${workspaceFolder}/applications/electron/lib/**/*.js",
-        "${workspaceFolder}/theia-extensions/*/lib/**/*.js",
+        "${workspaceFolder}/eso-thesis-extensions/*/lib/**/*.js",
         "${workspaceFolder}/dev-packages/*/lib/**/*.js"
       ],
       "smartStep": true,
