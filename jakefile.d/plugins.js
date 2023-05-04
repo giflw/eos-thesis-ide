@@ -152,7 +152,10 @@ async function updatePluginsOnFile(filename) {
         return url;
     };
 
+    const total = plugins.theiaPlugins.lenght;
+    let index = 0;
     for (let plugin in plugins.theiaPlugins) {
+        console.log('Updating ', index++, ' of ', total, '...');
         let url = null;
         while (url === null) {
             try {
@@ -162,6 +165,7 @@ async function updatePluginsOnFile(filename) {
                 console.log(err);
             }
         }
+        console.log(index, ' of ', total, ' updated.');
     }
 
     fs.writeFileSync(filename, JSON.stringify(plugins, null, 2));
