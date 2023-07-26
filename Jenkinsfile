@@ -47,6 +47,7 @@ spec:
   containers:
   - name: theia-dev
     image: eclipsetheia/theia-blueprint:builder
+    imagePullPolicy: Always
     command:
     - cat
     tty: true
@@ -82,7 +83,7 @@ spec:
                         container('theia-dev') {
                             withCredentials([string(credentialsId: "github-bot-token", variable: 'GITHUB_TOKEN')]) {
                                 script {
-                                    buildInstaller(1200)
+                                    buildInstaller(1200, false)
                                 }
                             }
                         }
@@ -100,7 +101,7 @@ spec:
                     }
                     steps {
                         script {
-                            buildInstaller(60)
+                            buildInstaller(60, false)
                         }
                         stash includes: "${distFolder}/*", name: 'mac'
                     }
@@ -118,7 +119,13 @@ spec:
                         script {
                             sh "npm config set msvs_version 2017"
                             sh "npx node-gyp install 14.20.0"
-                            buildInstaller(60)
+
+                            // analyze memory usage
+                            bat "wmic ComputerSystem get TotalPhysicalMemory"
+                            bat "wmic OS get FreePhysicalMemory"
+                            bat "tasklist"
+
+                            buildInstaller(60, true)
                         }
                         stash name: 'win'
                     }
@@ -177,6 +184,7 @@ spec:
   containers:
   - name: theia-dev
     image: eclipsetheia/theia-blueprint:builder
+    imagePullPolicy: Always
     command:
     - cat
     tty: true
@@ -218,15 +226,17 @@ spec:
                     steps {
                         unstash 'win'
                         container('theia-dev') {
-                            script {
-                                signInstaller('exe', 'windows')
-                                updateMetadata('TheiaBlueprint.exe', 'latest.yml', 'windows', 1200)
+                            withCredentials([string(credentialsId: "github-bot-token", variable: 'GITHUB_TOKEN')]) {
+                                script {
+                                    signInstaller('exe', 'windows')
+                                    updateMetadata('TheiaBlueprint.exe', 'latest.yml', 'windows', 1200)
+                                }
                             }
                         }
                         container('jnlp') {
                             script {
                                 uploadInstaller('windows')
-                                copyInstallerAndUpdateLatestYml('windows', 'TheiaBlueprint', 'exe', 'latest.yml', '')
+                                copyInstallerAndUpdateLatestYml('windows', 'TheiaBlueprint', 'exe', 'latest.yml', '1.36.0,1.37.0,1.38.0')
                             }
                         }
                     }
@@ -236,10 +246,15 @@ spec:
     }
 }
 
-def buildInstaller(int sleepBetweenRetries) {
+def buildInstaller(int sleepBetweenRetries, boolean excludeBrowser) {
     int MAX_RETRY = 3
 
     checkout scm
+    if (excludeBrowser) {
+        sh "npm install -g ts-node typescript '@types/node'"
+        sh "ts-node scripts/patch-workspaces.ts"
+    }
+    sh "node --version"
     sh "export NODE_OPTIONS=--max_old_space_size=4096"
     sh "printenv && yarn cache dir"
     sh "yarn cache clean"

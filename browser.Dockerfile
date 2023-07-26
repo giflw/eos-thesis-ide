@@ -12,8 +12,7 @@ COPY . .
 # Remove unnecesarry files for the browser application
 # Download plugins and build application production mode
 # Use yarn autoclean to remove unnecessary files from package dependencies
-RUN rm -rf .git applications/electron theia-extensions/theia-blueprint-launcher theia-extensions/theia-blueprint-updater && \
-    yarn --pure-lockfile && \
+RUN yarn --pure-lockfile && \
     yarn browser download:plugins && \
     yarn --production && \
     yarn autoclean --init && \
@@ -21,7 +20,8 @@ RUN rm -rf .git applications/electron theia-extensions/theia-blueprint-launcher 
     echo *.ts.map >> .yarnclean && \
     echo *.spec.* >> .yarnclean && \
     yarn autoclean --force && \
-    yarn cache clean
+    yarn cache clean && \
+    rm -rf .git applications/electron theia-extensions/theia-blueprint-launcher theia-extensions/theia-blueprint-updater node_modules
 
 # Production stage uses a small base image
 FROM node:16-bullseye-slim as production-stage
@@ -64,7 +64,7 @@ USER theia
 WORKDIR /home/theia/applications/browser
 
 # Launch the backend application via node
-ENTRYPOINT [ "node", "/home/theia/applications/browser/src-gen/backend/main.js" ]
+ENTRYPOINT [ "node", "/home/theia/applications/browser/lib/backend/main.js" ]
 
 # Arguments passed to the application
 CMD [ "/home/project", "--hostname=0.0.0.0" ]
