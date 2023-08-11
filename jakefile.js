@@ -1,6 +1,6 @@
 'use strict';
 
-require('dotenv').config();
+//require('dotenv').config();
 
 const { task, desc, Task } = require("jake");
 const { logger } = require("./jakefile.d/utils.cjs");

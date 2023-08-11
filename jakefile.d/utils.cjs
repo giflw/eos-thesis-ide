@@ -37,7 +37,8 @@ module.exports = {
     DIST_DIR: path.resolve(BASEDIR, "applications/electron/dist"),
     ELECTRON_DIR: path.resolve(BASEDIR, "applications/electron"),
     PACKAGE_JSON: path.resolve(BASEDIR, "applications/electron/package.json"),
-    PLUGINS_DIR: path.resolve(BASEDIR, "applications/electron/plugins"),
+    PLUGINS_DIR: path.resolve(BASEDIR, "applications/data/backend/extensions"),
+    PLUGINS_FILE: path.resolve(BASEDIR, "jakefile.d/plugins-list.json"),
     logger,
     sleep,
     get: async (url) => {

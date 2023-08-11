@@ -2,7 +2,7 @@
     "window.titleBarStyle": "custom",
     "security.workspace.trust.startupPrompt": "once",
     "editor.wordWrap": "on",
-    "editor.minimap.enabled": true,
+    "editor.minimap.enabled": false,
     "editor.fontFamily": "\"MesloLGM NF\", Consolas, 'Courier New', monospace",
     "workbench.colorTheme": "Synthax",
     "workbench.iconTheme": "material-icon-theme",
@@ -20,7 +20,16 @@
     "files.watcherExclude": {
         "**/.bloop": true,
         "**/.metals": true,
-        "**/.ammonite": true
+        "**/.ammonite": true,
+        "**/target": true
+    },
+    "redhat.telemetry.enabled": false,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true
     }
 }
 

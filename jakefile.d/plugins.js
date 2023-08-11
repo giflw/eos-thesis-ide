@@ -1,6 +1,6 @@
 'use strict';
 
-const { attempt, logger, download, get, sleep, unzip, PACKAGE_JSON, PLUGINS_DIR } = require('./utils.cjs');
+const { attempt, logger, download, get, sleep, unzip, PLUGINS_FILE, PLUGINS_DIR } = require('./utils.cjs');
 
 const fs = require('fs');
 const fse = require('fs-extra');
@@ -18,12 +18,12 @@ task('plugins', ['plugins:download', 'plugins:prune'], () => {
 namespace('plugins', function () {
     desc('Update Eos Thesis plugins versions/urls on package.json');
     task('update', async () => {
-        await updatePluginsOnFile(PACKAGE_JSON);
+        await updatePluginsOnFile(PLUGINS_FILE);
     });
 
     desc('Remove undeclared plugins');
     task('prune', () => {
-        const plugins = loadPackageJson().theiaPlugins;
+        const plugins = loadPluginsListJson().plugins;
         fs.readdirSync(PLUGINS_DIR).forEach(async (file) => {
             const parts = file.split('-');
             const version = parts.splice(-1)[0];
@@ -50,7 +50,7 @@ namespace('plugins', function () {
 
     desc('Remove all downloaded plugins');
     task('purge', async () => {
-        let target = PLUGINS_DIR + "\\*";
+        let target = PLUGINS_DIR + "\\*.vsix";
         logger.warn(`Purging ${target}`);
         await sleep(3000);
 
@@ -73,7 +73,7 @@ namespace('plugins', function () {
 
     desc('Update plantuml on jebbs.plantuml plugin');
     task('plantuml', async () => {
-        const filepath = path.resolve(
+        /*const filepath = path.resolve(
             PLUGINS_DIR,
             fs.readdirSync(PLUGINS_DIR).find(f => f.startsWith('jebbs.plantuml')),
             'extension',
@@ -81,14 +81,14 @@ namespace('plugins', function () {
         );
         const releases = await get('https://api.github.com/repos/plantuml/plantuml/releases/latest');
         const latest = releases.assets.find(r => r.name === 'plantuml.jar');
-        await download(latest.browser_download_url, filepath, { prefix: 'plantuml.jar' });
+        await download(latest.browser_download_url, filepath, { prefix: 'plantuml.jar' });*/
     });
 
-    desc('Download declared all plugins on package.json theiaPlugins');
+    desc('Download all declared plugins on plugins-list.json plugins');
     task('download', async () => {
-        const plugins = loadPackageJson();
-        for (let plugin in plugins.theiaPlugins) {
-            const url = plugins.theiaPlugins[plugin];
+        const plugins = loadPluginsListJson();
+        for (let plugin in plugins.plugins) {
+            const url = plugins.plugins[plugin];
             const dirpath = path.resolve(PLUGINS_DIR, plugin + '-' + versionFromUrl(url));
             const filepath = dirpath + '.vsix';
             if (fs.existsSync(dirpath)) {
@@ -99,7 +99,7 @@ namespace('plugins', function () {
                     async () => await download(url, filepath, { prefix: plugin }),
                     { delay: 100, prefix: plugin }
                 );
-                await unzip(filepath, dirpath, { prefix: plugin });
+                /*await unzip(filepath, dirpath, { prefix: plugin });
                 fs.unlinkSync(filepath);
                 if (plugin.includes('plantuml')) {
                     let t = Task['plugins:plantuml'];
@@ -109,7 +109,7 @@ namespace('plugins', function () {
                         });
                         t.invoke();
                     });
-                }
+                }*/
             }
         }
         logger.info('All plugins downloaded!');
@@ -122,8 +122,8 @@ namespace('plugins', function () {
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-function loadPackageJson() {
-    return JSON.parse(fs.readFileSync(PACKAGE_JSON));
+function loadPluginsListJson() {
+    return JSON.parse(fs.readFileSync(PLUGINS_FILE));
 }
 
 async function updatePluginsOnFile(filename) {
@@ -152,15 +152,15 @@ async function updatePluginsOnFile(filename) {
         return url;
     };
 
-    const total = plugins.theiaPlugins.lenght;
+    const total = Object.keys(plugins.plugins).length;
     let index = 0;
-    for (let plugin in plugins.theiaPlugins) {
+    for (let plugin in plugins.plugins) {
         console.log('Updating ', index++, ' of ', total, '...');
         let url = null;
         while (url === null) {
             try {
-                url = await updatePluginVersion(plugin, plugins.theiaPlugins[plugin]);
-                plugins.theiaPlugins[plugin] = url;
+                url = await updatePluginVersion(plugin, plugins.plugins[plugin]);
+                plugins.plugins[plugin] = url;
             } catch (err) {
                 console.log(err);
             }
