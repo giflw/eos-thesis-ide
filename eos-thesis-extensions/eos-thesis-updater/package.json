@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "eos-thesis-updater",
-  "version": "1.40.0",
+  "version": "1.40.0-1",
   "description": "Eos Thesis IDE Updater",
   "dependencies": {
     "@theia/core": "1.40.0",

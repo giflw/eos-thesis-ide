@@ -10,7 +10,7 @@ const rimraf = require('rimraf');
 
 
 desc('Run download and prune plugins tasks in a single call');
-task('plugins', ['plugins:download', 'plugins:prune'], () => {
+task('plugins', ['plugins:download'], () => {
     logger.info('Done!');
 });
 
@@ -90,7 +90,9 @@ namespace('plugins', function () {
         for (let plugin in plugins.plugins) {
             const url = plugins.plugins[plugin];
             const dirpath = path.resolve(PLUGINS_DIR, plugin + '-' + versionFromUrl(url));
+            logger.info(`dirpath: ${dirpath}`);
             const filepath = dirpath + '.vsix';
+            logger.info(`filepath: ${filepath}`);
             if (fs.existsSync(dirpath)) {
                 logger.info(`${plugin} - already downloaded`)
             } else {

@@ -13,7 +13,7 @@
     "prettier.endOfLine": "lf",
     "plantuml.exportOutDir": "",
     "files.trimTrailingWhitespace": true,
-    "terminal.integrated.fontFamily": "\"MesloLGM NF\", Consolas, 'Courier New', monospace",
+    "terminal.integrated.fontFamily": "'MesloLGSDZ Nerd Font Mono', 'MesloLGSDZ Nerd Font', Consolas, 'Courier New', monospace",
     "sqltools.disableChordKeybindings": true,
     "sqltools.results.reuseTabs": "connection",
     "sqltools.sessionFilesFolder": ".sqltools",
@@ -21,7 +21,8 @@
         "**/.bloop": true,
         "**/.metals": true,
         "**/.ammonite": true,
-        "**/target": true
+        "**/target": true,
+        "**/build": true
     },
     "redhat.telemetry.enabled": false,
     "files.exclude": {
@@ -29,7 +30,12 @@
         "**/.svn": true,
         "**/.hg": true,
         "**/CVS": true,
-        "**/.DS_Store": true
+        "**/.DS_Store": true,
+        "**/.bloop": true,
+        "**/.metals": true,
+        "**/.ammonite": true,
+        "**/target": true,
+        "**/build": true
     }
 }
 
