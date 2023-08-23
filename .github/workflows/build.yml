@@ -55,7 +55,7 @@ jobs:
         run: |
           npm install -g yarn
           yarn --skip-integrity-check --network-timeout 100000
-          yarn eos plugins:plantuml
+          yarn eos plugins:download
           yarn electron package
           yarn eos package
           mkdir applications/electron/dist/uploads
