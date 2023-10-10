@@ -39,9 +39,11 @@ const signFile = file => {
     }
 };
 
-exports.default = async function(context) {
-    const running_ci = process.env.BLUEPRINT_JENKINS_CI == 'true';
-    const running_on_mac = context.packager.platform.name == 'mac';
+exports.default = async function (context) {
+    const running_ci = process.env.BLUEPRINT_JENKINS_CI === 'true';
+    const releaseDryRun = process.env.BLUEPRINT_JENKINS_RELEASE_DRYRUN === 'true';
+    const branch = process.env.BRANCH_NAME;
+    const running_on_mac = context.packager.platform.name === 'mac';
     const appPath = path.resolve(context.appOutDir, `${context.packager.appInfo.productFilename}.app`);
 
     // Remove anything we don't want in the final package
