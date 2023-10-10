@@ -16,7 +16,8 @@
 
 import '../../src/browser/style/index.css';
 
-import { FrontendApplicationContribution, WidgetFactory, bindViewContribution, PreferenceContribution } from '@theia/core/lib/browser';
+import { FrontendApplicationContribution, WidgetFactory, bindViewContribution } from '@theia/core/lib/browser';
+
 import { AboutDialog } from '@theia/core/lib/browser/about-dialog';
 import { CommandContribution } from '@theia/core/lib/common/command';
 import { ContainerModule } from '@theia/core/shared/inversify';
@@ -26,7 +27,6 @@ import { EosThesisAboutDialog } from './eos-thesis-about-dialog';
 import { EosThesisContribution } from './eos-thesis-contribution';
 import { EosThesisGettingStartedContribution } from './eos-thesis-getting-started-contribution';
 import { EosThesisGettingStartedWidget } from './eos-thesis-getting-started-widget';
-import { eosThesisPreferenceSchema } from './eos-thesis-preferences';
 
 export default new ContainerModule((bind, _unbind, isBound, rebind) => {
     bindViewContribution(bind, EosThesisGettingStartedContribution);
@@ -46,6 +46,4 @@ export default new ContainerModule((bind, _unbind, isBound, rebind) => {
     [CommandContribution, MenuContribution].forEach(serviceIdentifier =>
         bind(serviceIdentifier).toService(EosThesisContribution)
     );
-
-    bind(PreferenceContribution).toConstantValue({ schema: eosThesisPreferenceSchema });
 });
