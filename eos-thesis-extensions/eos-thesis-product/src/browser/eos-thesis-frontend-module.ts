@@ -16,8 +16,7 @@
 
 import '../../src/browser/style/index.css';
 
-import { FrontendApplicationContribution, WidgetFactory, bindViewContribution } from '@theia/core/lib/browser';
-
+import { WidgetFactory } from '@theia/core/lib/browser';
 import { AboutDialog } from '@theia/core/lib/browser/about-dialog';
 import { CommandContribution } from '@theia/core/lib/common/command';
 import { ContainerModule } from '@theia/core/shared/inversify';
@@ -25,12 +24,9 @@ import { GettingStartedWidget } from '@theia/getting-started/lib/browser/getting
 import { MenuContribution } from '@theia/core/lib/common/menu';
 import { EosThesisAboutDialog } from './eos-thesis-about-dialog';
 import { EosThesisContribution } from './eos-thesis-contribution';
-import { EosThesisGettingStartedContribution } from './eos-thesis-getting-started-contribution';
 import { EosThesisGettingStartedWidget } from './eos-thesis-getting-started-widget';
 
 export default new ContainerModule((bind, _unbind, isBound, rebind) => {
-    bindViewContribution(bind, EosThesisGettingStartedContribution);
-    bind(FrontendApplicationContribution).toService(EosThesisGettingStartedContribution);
     bind(EosThesisGettingStartedWidget).toSelf();
     bind(WidgetFactory).toDynamicValue(context => ({
         id: GettingStartedWidget.ID,
