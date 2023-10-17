@@ -1,0 +1,18 @@
+[
+    {
+        "command": "-close.window",
+        "keybinding": "ctrl+w"
+    },
+    {
+        "command": "close.window",
+        "keybinding": "ctrl+q"
+    },
+    {
+        "command": "core.close.main.tab",
+        "keybinding": "ctrl+w"
+    },
+    {
+        "command": "-core.close.main.tab",
+        "keybinding": "ctrl+f4"
+    }
+]
