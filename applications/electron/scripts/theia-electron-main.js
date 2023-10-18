@@ -5,9 +5,10 @@ const { app } = require('electron');
 
 const productName = 'eos-thesis';
 const portable = fs.existsSync(path.resolve(process.execPath, `../data/.${productName}.portable`))
+let pluginsPath;
 if (portable) {
     const userDataPath = path.resolve(app.getAppPath(), '../../', 'data/userData');
-    const pluginsPath = path.resolve(app.getAppPath(), '../../', 'data/plugins');
+    pluginsPath = path.resolve(app.getAppPath(), '../../', 'data/plugins');
 
     [userDataPath, pluginsPath].forEach(p => fs.existsSync(p) ? fs.mkdirSync(p, {recursive : true}) : null)
 
