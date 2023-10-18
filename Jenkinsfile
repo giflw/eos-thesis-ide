@@ -254,14 +254,14 @@ spec:
                             withCredentials([string(credentialsId: "github-bot-token", variable: 'GITHUB_TOKEN')]) {
                                 script {
                                     signInstaller('exe', 'windows')
-                                    updateMetadata('TheiaBlueprint.exe', 'latest.yml', 'windows', 1200)
+                                    updateMetadata('EosThesisIDE.exe', 'latest.yml', 'windows', 1200)
                                 }
                             }
                         }
                         container('jnlp') {
                             script {
                                 uploadInstaller('windows')
-                                copyInstallerAndUpdateLatestYml('windows', 'TheiaBlueprint', 'exe', 'latest.yml', '1.39.0,1.40.0,1.41.0')
+                                copyInstallerAndUpdateLatestYml('windows', 'EosThesisIDE', 'exe', 'latest.yml', '1.39.0,1.40.0,1.41.0')
                             }
                         }
                     }
